@@ -17,20 +17,16 @@ class DbHelper{
         version: _version,
         onCreate: (db,version){
           return db.execute(
-            "CREATE TABLE $_tableName("
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                "title STRING, note TEXT, date STRING, "
-                "startTime STRING, endTime STRING, "
-                "remind INTEGER, repeat STRING, "
-                "color INTEGER, "
-                "isCompleted INTEGER)"
-          );
+            "CREATE TABLE $_tableName( id INTEGER PRIMARY KEY AUTOINCREMENT,title STRING, note TEXT, date STRING,"
+                "startTime STRING, endTime STRING, remind INTEGER, repeat STRING, color INTEGER, isCompleted INTEGER);"
+               );
         }
       );
     } catch(e){
       print(e);
     }
   }
+
 
   static Future<int> insert(TaskModel? model) async{
     return await _db?.insert(_tableName, model!.toJson())?? 1;
@@ -44,7 +40,7 @@ class DbHelper{
   static update(int id) async{
     return
   await  _db!.rawUpdate('''
-    UPDATE tasks
+    UPDATE $_tableName
     SET isCompleted = ?
     WHERE id= ?
     ''', [1,id]);
